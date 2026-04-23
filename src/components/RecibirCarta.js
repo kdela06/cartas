@@ -40,12 +40,18 @@ export default function RecibirCarta({ setScreen }) {
         const updatedLetters = prevLetters.map(letter => {
           if (letter.unlockTime <= currentTime && !letter.notified) {
             hasChanges = true;
-            if ('Notification' in window && typeof window.Notification === 'function' && Notification.permission === 'granted') {
-              new Notification('¡Te ha llegado una carta!', {
-                body: 'Una de tus cartas secretas ya puede ser abierta.',
-                icon: sello 
-              });
+
+            try {
+              if ('Notification' in window && typeof window.Notification === 'function' && Notification.permission === 'granted') {
+                new Notification('¡Te ha llegado una carta!', {
+                  body: 'Una de tus cartas secretas ya puede ser abierta.',
+                  icon: sello 
+                });
+              }
+            } catch (error) {
+              console.warn('El móvil bloqueó la notificación nativa, pero la carta se abrirá igual.', error);
             }
+
             return { ...letter, notified: true }; 
           }
           return letter;
@@ -88,7 +94,9 @@ export default function RecibirCarta({ setScreen }) {
         setPendingLetters(updatedLetters);
         localStorage.setItem('cartas_pendientes', JSON.stringify(updatedLetters));
         
-        alert('Carta depositada en la mesa. Empezando cuenta atrás.');
+        setTimeout(() => {
+          alert('Carta depositada en la mesa. Empezando cuenta atrás.');
+        }, 150);
       } catch (error) {
         alert('Sello Roto: El archivo no es una carta válida.');
       }
@@ -178,7 +186,13 @@ export default function RecibirCarta({ setScreen }) {
 
   return (
     <div style={styles.container}>
-      <input type="file" accept=".carta,.txt" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileUpload} />
+      <input 
+        type="file" 
+        accept=".carta,.txt" 
+        ref={fileInputRef} 
+        style={{ width: 0, height: 0, overflow: 'hidden', position: 'absolute', opacity: 0 }} 
+        onChange={handleFileUpload} 
+      />
       <button 
         style={{ ...styles.button, backgroundColor: '#E8DCC4', color: '#4A3B32', border: '2px dashed #C1A68D', height: '80px', marginBottom: '30px' }} 
         onClick={() => {

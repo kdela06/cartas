@@ -1,6 +1,7 @@
 export const styles = {
   container: {
     minHeight: '100vh',
+    minHeight: '100dvh',
     backgroundColor: '#F4ECD8',
     padding: '30px',
     display: 'flex',
