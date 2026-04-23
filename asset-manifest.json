@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/cartas/static/css/main.e6c13ad2.css",
-    "main.js": "/cartas/static/js/main.01cf72ce.js",
+    "main.js": "/cartas/static/js/main.3d6fe6bf.js",
     "static/media/sello_predeterminado.png": "/cartas/static/media/sello_predeterminado.bb9f6382fde77a9419ab.png",
     "static/media/caja.png": "/cartas/static/media/caja.0cf8041d193538ab546c.png",
     "static/media/buzon.png": "/cartas/static/media/buzon.a674031e75d1d528b2d5.png",
@@ -9,10 +9,10 @@
     "static/media/sello.png": "/cartas/static/media/sello.bc394eb009f80de8af21.png",
     "index.html": "/cartas/index.html",
     "main.e6c13ad2.css.map": "/cartas/static/css/main.e6c13ad2.css.map",
-    "main.01cf72ce.js.map": "/cartas/static/js/main.01cf72ce.js.map"
+    "main.3d6fe6bf.js.map": "/cartas/static/js/main.3d6fe6bf.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.01cf72ce.js"
+    "static/js/main.3d6fe6bf.js"
   ]
 }
