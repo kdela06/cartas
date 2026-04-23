@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+import EscribirCarta from './components/EscribirCarta'; 
+import Main from './components/Main';
+import RecibirCarta from './components/RecibirCarta';
+import Biblioteca from './components/Biblioteca';
+
+export default function App() {
+  const [screen, setScreen] = useState('main'); 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {screen === 'main' && <Main setScreen={setScreen} />}
+      {screen === 'escribir' && <EscribirCarta setScreen={setScreen} />}
+      {screen === 'recibir' && <RecibirCarta setScreen={setScreen} />}
+      {screen === 'biblioteca' && <Biblioteca setScreen={setScreen} />}
     </div>
   );
 }
-
-export default App;
