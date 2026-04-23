@@ -18,8 +18,14 @@ export default function RecibirCarta({ setScreen }) {
     const storedLetters = JSON.parse(localStorage.getItem('cartas_pendientes') || '[]');
     setPendingLetters(storedLetters);
 
-    if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-      Notification.requestPermission();
+    try {
+      if ('Notification' in window && typeof window.Notification.requestPermission === 'function') {
+        if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+          Notification.requestPermission();
+        }
+      }
+    } catch (error) {
+      console.warn('Las notificaciones no están soportadas al 100% en este navegador móvil.', error);
     }
   }, []);
 
@@ -34,7 +40,7 @@ export default function RecibirCarta({ setScreen }) {
         const updatedLetters = prevLetters.map(letter => {
           if (letter.unlockTime <= currentTime && !letter.notified) {
             hasChanges = true;
-            if ('Notification' in window && Notification.permission === 'granted') {
+            if ('Notification' in window && typeof window.Notification === 'function' && Notification.permission === 'granted') {
               new Notification('¡Te ha llegado una carta!', {
                 body: 'Una de tus cartas secretas ya puede ser abierta.',
                 icon: sello 
@@ -176,7 +182,16 @@ export default function RecibirCarta({ setScreen }) {
       <button 
         style={{ ...styles.button, backgroundColor: '#E8DCC4', color: '#4A3B32', border: '2px dashed #C1A68D', height: '80px', marginBottom: '30px' }} 
         onClick={() => {
-          if ('Notification' in window && Notification.permission !== 'granted') Notification.requestPermission();
+          // SOLUCIÓN: Verificación segura en el botón
+          try {
+            if ('Notification' in window && typeof window.Notification.requestPermission === 'function') {
+              if (Notification.permission !== 'granted') {
+                Notification.requestPermission();
+              }
+            }
+          } catch (error) {
+            console.warn('Notificaciones no soportadas.');
+          }
           fileInputRef.current.click();
         }}
       >
